@@ -1,44 +1,22 @@
-%global cartridgedir %{_libexecdir}/openshift/cartridges/v2/php
-%global frameworkdir %{_libexecdir}/openshift/cartridges/v2/php
+%global cartridgedir %{_libexecdir}/openshift/cartridges/v2/php-fpm
+%global frameworkdir %{_libexecdir}/openshift/cartridges/v2/php-fpm
 
-Name:          openshift-origin-cartridge-php
-Version: 0.5.1
+Name:          openshift-origin-cartridge-php-fpm
+Version: 0.0.1
 Release:       1%{?dist}
-Summary:       Php cartridge
+Summary:       PHP-FPM cartridge
 Group:         Development/Languages
 License:       ASL 2.0
 URL:           https://www.openshift.com
 Source0:       http://mirror.openshift.com/pub/openshift-origin/source/%{name}/%{name}-%{version}.tar.gz
 Requires:      rubygem(openshift-origin-node)
 %if 0%{?fedora}%{?rhel} <= 6
-Requires:      php >= 5.3.2
-Requires:      php < 5.4
 Requires:      httpd < 2.4
 %endif
 %if 0%{?fedora} >= 19
-Requires:      php >= 5.5
-Requires:      php < 5.6
 Requires:      httpd > 2.3
 Requires:      httpd < 2.5
 %endif
-Requires:      php
-Requires:      php-devel
-Requires:      php-pdo
-Requires:      php-gd
-Requires:      php-xml
-Requires:      php-mysql
-Requires:      php-pecl-mongo
-Requires:      php-pgsql
-Requires:      php-mbstring
-Requires:      php-pear
-Requires:      php-imap
-Requires:      php-pecl-apc
-Requires:      php-mcrypt
-Requires:      php-soap
-Requires:      php-bcmath
-Requires:      php-process
-Requires:      php-pecl-imagick
-Requires:      php-pecl-xdebug
 BuildArch:     noarch
 
 %description
@@ -66,7 +44,7 @@ mv %{buildroot}%{cartridgedir}/metadata/manifest.yml.fedora19 %{buildroot}%{cart
 rm %{buildroot}%{cartridgedir}/metadata/manifest.yml.*
 
 %post
-%{_sbindir}/oo-admin-cartridge --action install --source /usr/libexec/openshift/cartridges/v2/php
+%{_sbindir}/oo-admin-cartridge --action install --source /usr/libexec/openshift/cartridges/v2/php-fpm
 
 %files
 %attr(0755,-,-) %{cartridgedir}/bin/
