@@ -8,7 +8,9 @@ CustomLog "<%= "|/usr/sbin/rotatelogs #{ENV['OPENSHIFT_PHP_DIR']}/logs/access_lo
 <IfVersion >= 2.4>
 DefaultRuntimeDir "<%= "#{ENV['OPENSHIFT_PHP_DIR']}/run"%>"
 </IfVersion>
-php_value include_path "<%= ".:#{ENV['OPENSHIFT_REPO_DIR']}/libs/:#{ENV['OPENSHIFT_PHP_DIR']}/phplib/pear/pear/php/:/usr/share/pear/"%>"
+<IfModule mod_php.c>
+  php_value include_path "<%= ".:#{ENV['OPENSHIFT_REPO_DIR']}/libs/:#{ENV['OPENSHIFT_PHP_DIR']}/phplib/pear/pear/php/:/usr/share/pear/"%>"
+</IfModule>
 
 <Directory "<%= "#{ENV['OPENSHIFT_REPO_DIR']}/php" %>">
   AllowOverride All
