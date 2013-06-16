@@ -5,16 +5,14 @@ case "$1" in
     version="$2"
 esac
 
-
 download_dir="$OPENSHIFT_PHP_DIR/download"
 mkdir -p $download_dir
-cd $download_dir
 
-wget http://phpbuild-phase2technology.rhcloud.com/mod_fastcgi.tar.gz
-wget http://phpbuild-phase2technology.rhcloud.com/php-5.3.26.tar.gz
+wget http://phpbuild-phase2technology.rhcloud.com/mod_fastcgi.tar.gz -P $download_dir
+wget http://phpbuild-phase2technology.rhcloud.com/php-5.3.26.tar.gz -P $download_dir
 
-tar xzvf mod_fastcgi.tar.gz
-tar xzvf php-5.3.26.tar.gz
+tar xzvf $download_dir/mod_fastcgi.tar.gz
+tar xzvf $download_Dir/php-5.3.26.tar.gz
 
 # Copy mod_fastcgi into place.
 #cp -fr $download_dir/mod_fastcgi $OPENSHIFT_HOMEDIR/runtime/
