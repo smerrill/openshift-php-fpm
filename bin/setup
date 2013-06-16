@@ -11,6 +11,22 @@ shopt -s dotglob
 mkdir -p $OPENSHIFT_PHP_DIR/configuration/etc/
 cp -Hr $OPENSHIFT_PHP_DIR/versions/shared/configuration/etc/* $OPENSHIFT_PHP_DIR/configuration/etc/
 
+cat > $OPENSHIFT_PHP_DIR/build/php-5.3.26/etc/php-fpm.conf <FPM
+[global]
+daemonize = yes
+
+[www]
+listen = /tmp/php-fpm.sock
+
+# Assume 3 workers * 128M memory_limit = max 384M memory usage.
+pm = ondemand
+pm.max_children = 3
+# Since we may be RAM-constrained, start 0 processes.
+pm.start_servers = 0
+# Kill the processes after 2 minutes to conserve RAM.
+pm.process_idle_timeout = 120
+FPM
+
 # Create additional directories required by PHP
 mkdir -p $OPENSHIFT_PHP_DIR/phplib/pear/{docs,ext,php,cache,cfg,data,download,temp,tests,www}
 mkdir -p $OPENSHIFT_PHP_DIR/{logs,run,tmp,sessions}
