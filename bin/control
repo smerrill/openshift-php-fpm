@@ -20,7 +20,7 @@ function fpm() {
   case "$1" in
     start)
       $OPENSHIFT_PHP_DIR/build/php-5.3.26/sbin/php-fpm \
-        --fpm-config $OPENSHIFT_PHP_DIR/build/php-5.3.26/etc/php-fpm.conf \
+        --fpm-config $OPENSHIFT_PHP_DIR/configuration/etc/php-fpm.conf \
         --prefix $OPENSHIFT_PHP_DIR/build/php-5.3.26/var \
         --pid $OPENSHIFT_PHP_DIR/run/php-fpm.pid
       return $?
