@@ -17,6 +17,9 @@ file $download_dir/php-5.3.26.tar.gz
 tar xzvf $download_dir/mod_fastcgi.tar.gz
 tar xzvf $download_dir/php-5.3.26.tar.gz
 
+# Copy mod_fastcgi into place.
+cp -fr $download_dir/mod_fastcgi $OPENSHIFT_HOMEDIR/runtime/
+
 echo "$version" > "$OPENSHIFT_PHP_DIR/env/OPENSHIFT_PHP_VERSION"
 echo "$OPENSHIFT_PHP_DIR/configuration/etc/php.ini" > "$OPENSHIFT_PHP_DIR/env/PHPRC"
 
