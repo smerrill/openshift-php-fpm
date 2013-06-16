@@ -5,6 +5,15 @@ case "$1" in
     version="$2"
 esac
 
+download_dir="$OPENSHIFT_PHP_DIR/download"
+mkdir -p $download_dir
+
+wget http://192.168.0.155/mod_fastcgi.tar.gz -P $download_dir
+wget http://192.168.0.155/php-5.3.26.tar.gz -P $download_dir
+
+tar xzvf $download_dir/mod_fastcgi.tar.gz
+tar xzvf $download_dir/php-5.3.26.tar.gz
+
 echo "$version" > "$OPENSHIFT_PHP_DIR/env/OPENSHIFT_PHP_VERSION"
 echo "$OPENSHIFT_PHP_DIR/configuration/etc/php.ini" > "$OPENSHIFT_PHP_DIR/env/PHPRC"
 
