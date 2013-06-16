@@ -1,0 +1,13 @@
+[global]
+daemonize = yes
+
+[www]
+listen = /tmp/php-fpm.sock
+
+# Assume 3 workers * 128M memory_limit = max 384M memory usage.
+pm = ondemand
+pm.max_children = 3
+# Since we may be RAM-constrained, start 0 processes.
+pm.start_servers = 0
+# Kill the processes after 2 minutes to conserve RAM.
+pm.process_idle_timeout = 120
