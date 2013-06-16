@@ -12,7 +12,7 @@ wget http://phpbuild-phase2technology.rhcloud.com/mod_fastcgi.tar.gz -P $downloa
 wget http://phpbuild-phase2technology.rhcloud.com/php-5.3.26.tar.gz -P $download_dir
 
 tar xzvf $download_dir/mod_fastcgi.tar.gz
-tar xzvf $download_Dir/php-5.3.26.tar.gz
+tar xzvf $download_dir/php-5.3.26.tar.gz
 
 # Copy mod_fastcgi into place.
 #cp -fr $download_dir/mod_fastcgi $OPENSHIFT_HOMEDIR/runtime/
