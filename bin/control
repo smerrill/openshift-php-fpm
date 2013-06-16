@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+exit 0
+
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
 
 HTTPD_CFG_FILE=$OPENSHIFT_PHP_DIR/configuration/etc/conf/httpd_nolog.conf
@@ -10,8 +12,7 @@ function apache() {
     client_message "$2 Apache+mod_php HTTPD server"
     [ "$1" != "stop" ] && update_httpd_passenv $HTTPD_CFG_FILE
     /usr/sbin/httpd -C "Include $HTTPD_CFG_DIR/*.conf" -f $HTTPD_CFG_FILE -k $1
-    # @TODO: For testing, don't fail if http does not start.
-    #return $?
+    return $?
 }
 
 function stop() {
