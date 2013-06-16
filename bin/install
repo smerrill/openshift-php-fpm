@@ -11,6 +11,9 @@ mkdir -p $download_dir
 wget http://192.168.0.155/mod_fastcgi.tar.gz -P $download_dir
 wget http://192.168.0.155/php-5.3.26.tar.gz -P $download_dir
 
+file $download_dir/mod_fastcgi.tar.gz
+file $download_dir/php-5.3.26.tar.gz
+
 tar xzvf $download_dir/mod_fastcgi.tar.gz
 tar xzvf $download_dir/php-5.3.26.tar.gz
 
