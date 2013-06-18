@@ -17,6 +17,9 @@ tar xzvf $download_dir/php-5.3.26.tar.gz
 # Copy mod_fastcgi into place.
 #cp -fr $download_dir/mod_fastcgi $OPENSHIFT_HOMEDIR/runtime/
 
+# Make a 'php-cli' executable so that drush doesn't find the system PHP and freak.
+ln -s $OPENSHIFT_PHP_DIR/build/php-5.3.26/bin/php{,-cli}
+
 echo "$version" > "$OPENSHIFT_PHP_DIR/env/OPENSHIFT_PHP_VERSION"
 echo "$OPENSHIFT_PHP_DIR/configuration/etc/php.ini" > "$OPENSHIFT_PHP_DIR/env/PHPRC"
 
