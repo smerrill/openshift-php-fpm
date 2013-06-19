@@ -21,7 +21,7 @@ function fpm() {
     start)
       LD_LIBRARY_PATH=$OPENSHIFT_PHP_DIR/usr/lib64 \
       PHP_INI_SCAN_DIR=$OPENSHIFT_PHP_DIR/etc/php.d \
-      PHPRC=$OPENSHIFT_PHP_DIR/etc/php.ini \
+      PHPRC=$OPENSHIFT_PHP_DIR/configuration/etc/php.ini \
       $OPENSHIFT_PHP_DIR/usr/sbin/php-fpm \
         --fpm-config $OPENSHIFT_PHP_DIR/configuration/etc/php-fpm.conf \
         --pid $FPM_PID_FILE
