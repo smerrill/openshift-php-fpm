@@ -805,7 +805,8 @@ user_dir =
 
 ; Directory in which the loadable extensions (modules) reside.
 ; http://www.php.net/manual/en/ini.core.php#ini.extension-dir
-; extension_dir = "./"
+extension_dir = "<%= "#{ENV['OPENSHIFT_PHP_DIR']}usr/lib64/modules/php" %>"
+
 
 ; Whether or not to enable the dl() function.  The dl() function does NOT work
 ; properly in multithreaded servers, such as IIS or Zeus, and is automatically
