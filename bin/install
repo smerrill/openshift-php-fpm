@@ -9,9 +9,6 @@ wget http://phpbuild-phase2technology.rhcloud.com/php54.tgz
 
 tar xzvf php54.tgz --strip-components=1
 
-# Make a 'php-cli' executable so that drush doesn't find the system PHP and freak.
-ln -s $OPENSHIFT_PHP_DIR/usr/bin/php{,-cli}
-
 echo "$version" > "$OPENSHIFT_PHP_DIR/env/OPENSHIFT_PHP_VERSION"
 
 ln -s /usr/lib64/httpd/modules $OPENSHIFT_PHP_DIR/modules
