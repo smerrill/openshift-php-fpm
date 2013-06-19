@@ -1,10 +1,10 @@
-%global cartridgedir %{_libexecdir}/openshift/cartridges/v2/php-fpm
-%global frameworkdir %{_libexecdir}/openshift/cartridges/v2/php-fpm
+%global cartridgedir %{_libexecdir}/openshift/cartridges/v2/php54
+%global frameworkdir %{_libexecdir}/openshift/cartridges/v2/php54
 
-Name:          openshift-origin-cartridge-php-fpm
+Name:          openshift-origin-cartridge-php54
 Version: 0.0.1
 Release:       1%{?dist}
-Summary:       PHP-FPM cartridge
+Summary:       PHP 5.4 cartridge
 Group:         Development/Languages
 License:       ASL 2.0
 URL:           https://www.openshift.com
@@ -44,7 +44,7 @@ mv %{buildroot}%{cartridgedir}/metadata/manifest.yml.fedora19 %{buildroot}%{cart
 rm %{buildroot}%{cartridgedir}/metadata/manifest.yml.*
 
 %post
-%{_sbindir}/oo-admin-cartridge --action install --source /usr/libexec/openshift/cartridges/v2/php-fpm
+%{_sbindir}/oo-admin-cartridge --action install --source /usr/libexec/openshift/cartridges/v2/php54
 
 %files
 %attr(0755,-,-) %{cartridgedir}/bin/
