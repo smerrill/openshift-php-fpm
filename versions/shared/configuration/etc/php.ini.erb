@@ -789,6 +789,7 @@ default_mimetype = "text/html"
 ;
 ; PHP's default setting for include_path is ".;/path/to/php/pear"
 ; http://www.php.net/manual/en/ini.core.php#ini.include-path
+include_path = "<%= ".:#{ENV['OPENSHIFT_REPO_DIR']}/libs/:#{ENV['OPENSHIFT_PHP_DIR']}/phplib/pear/pear/php/:#{ENV['OPENSHIFT_PHP_DIR']}/usr/share/pear/"%>"
 
 ; The root of the PHP pages, used only if nonempty.
 ; if PHP was not compiled with FORCE_REDIRECT, you SHOULD set doc_root
