@@ -21,7 +21,7 @@ function fpm() {
     start)
       $OPENSHIFT_PHP_DIR/usr/sbin/php-fpm \
         --fpm-config $OPENSHIFT_PHP_DIR/configuration/etc/php-fpm.conf \
-        --pid $FPM_DIR_FILE
+        --pid $FPM_PID_FILE
       return $?
       ;;
     stop)
