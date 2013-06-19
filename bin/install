@@ -5,20 +5,12 @@ case "$1" in
     version="$2"
 esac
 
-download_dir="$OPENSHIFT_PHP_DIR/download"
-mkdir -p $download_dir
+wget http://phpbuild-phase2technology.rhcloud.com/php54.tgz
 
-wget http://phpbuild-phase2technology.rhcloud.com/mod_fastcgi.tar.gz -P $download_dir
-wget http://phpbuild-phase2technology.rhcloud.com/php-5.3.26.tar.gz -P $download_dir
-
-tar xzvf $download_dir/mod_fastcgi.tar.gz
-tar xzvf $download_dir/php-5.3.26.tar.gz
-
-# Copy mod_fastcgi into place.
-#cp -fr $download_dir/mod_fastcgi $OPENSHIFT_HOMEDIR/runtime/
+tar xzvf php54.tgz --strip-components=1
 
 # Make a 'php-cli' executable so that drush doesn't find the system PHP and freak.
-ln -s $OPENSHIFT_PHP_DIR/build/php-5.3.26/bin/php{,-cli}
+ln -s $OPENSHIFT_PHP_DIR/usr/bin/php{,-cli}
 
 echo "$version" > "$OPENSHIFT_PHP_DIR/env/OPENSHIFT_PHP_VERSION"
 echo "$OPENSHIFT_PHP_DIR/configuration/etc/php.ini" > "$OPENSHIFT_PHP_DIR/env/PHPRC"

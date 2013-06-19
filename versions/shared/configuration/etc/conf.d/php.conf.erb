@@ -1,14 +1,6 @@
-LoadModule fastcgi_module <%= ENV['OPENSHIFT_PHP_DIR'] %>/mod_fastcgi/usr/lib64/httpd/modules/mod_fastcgi.so
-<IfModule mod_fastcgi.c>
-  Alias /php5.fcgi /var/www/php5.fcgi
-  FastCGIExternalServer /var/www/php5.fcgi -flush -socket /tmp/php-fpm.sock
-  AddType application/x-httpd-fastphp5 .php
-  Action application/x-httpd-fastphp5 /php5.fcgi
-</IfModule>
-#LoadModule php5_module modules/libphp5.so
+LoadModule php5_module <%= ENV['OPENSHIFT_PHP_DIR'] %>/usr/lib64/httpd/modules/libphp5.so
 <FilesMatch \.php$>
-  SetHandler application/x-httpd-fastphp5
-  #SetHandler php5-script
+  SetHandler php5-script
 </FilesMatch>
 AddType text/html .php
 DirectoryIndex index.html index.php
