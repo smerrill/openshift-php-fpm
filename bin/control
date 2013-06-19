@@ -30,10 +30,10 @@ function fpm() {
     stop)
       client_message "PHP-FPM"
       if [ -f "$FPM_PID_FILE" ]; then
-          fpm_pid=`cat "$FPM_PID_FILE" 2> /dev/null`
+        fpm_pid=`cat "$FPM_PID_FILE" 2> /dev/null`
+        kill $fpm_pid
+        return $?
       fi
-      kill $fpm_pid
-      return $?
       ;;
     restart)
       fpm stop && fpm start ;;
