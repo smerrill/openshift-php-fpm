@@ -19,6 +19,10 @@ function fpm() {
 
   case "$1" in
     start)
+      if [ -f "$FPM_PID_FILE" ]; then
+        echo "PHP-FPM is already running."
+        return 0
+      fi
       LD_LIBRARY_PATH=$OPENSHIFT_PHP_DIR/usr/lib64 \
       PHP_INI_SCAN_DIR=$OPENSHIFT_PHP_DIR/etc/php.d \
       PHPRC=$OPENSHIFT_PHP_DIR/configuration/etc/php.ini \
