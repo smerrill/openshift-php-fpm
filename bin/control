@@ -36,7 +36,9 @@ function fpm() {
       if [ -f "$FPM_PID_FILE" ]; then
         fpm_pid=`cat "$FPM_PID_FILE" 2> /dev/null`
         kill $fpm_pid
-        return $?
+        return_status=$?
+        rm -f $FPM_PID_FILE
+        return $return_status
       fi
       ;;
     restart)
