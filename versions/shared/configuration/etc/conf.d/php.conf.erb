@@ -1,7 +1,7 @@
 LoadModule fastcgi_module <%= ENV['OPENSHIFT_PHP_DIR'] %>usr/lib64/httpd/modules/mod_fastcgi.so
 <IfModule mod_fastcgi.c>
   Alias /php5.fcgi /var/www/php5.fcgi
-  FastCGIExternalServer /var/www/php5.fcgi -flush -socket /tmp/php-fpm.sock
+  FastCGIExternalServer /var/www/php5.fcgi -flush -socket -idle-timeout 210 /tmp/php-fpm.sock
   AddType application/x-httpd-fastphp5 .php
   Action application/x-httpd-fastphp5 /php5.fcgi
 </IfModule>
