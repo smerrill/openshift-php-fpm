@@ -1,4 +1,4 @@
-LoadModule fastcgi_module <%= ENV['OPENSHIFT_PHP_DIR'] %>usr/lib64/httpd/modules/mod_fastcgi.so
+LoadModule fastcgi_module <%= ENV['OPENSHIFT_HOMEDIR'] %>usr/mod_fastcgi/2.4.6-2/usr/lib64/httpd/modules/mod_fastcgi.so
 <IfModule mod_fastcgi.c>
   Alias /php5.fcgi /var/www/php5.fcgi
   FastCGIExternalServer /var/www/php5.fcgi -flush -socket /tmp/php-fpm.sock -idle-timeout 210
