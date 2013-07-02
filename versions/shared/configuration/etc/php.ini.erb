@@ -806,7 +806,7 @@ user_dir =
 
 ; Directory in which the loadable extensions (modules) reside.
 ; http://www.php.net/manual/en/ini.core.php#ini.extension-dir
-extension_dir = "<%= "#{ENV['OPENSHIFT_PHP_DIR']}usr/lib64/php/modules" %>"
+extension_dir = "<%= "#{ENV['OPENSHIFT_HOMEDIR']}usr/php/5.4.16-1/usr/lib64/php/modules" %>"
 
 
 ; Whether or not to enable the dl() function.  The dl() function does NOT work
