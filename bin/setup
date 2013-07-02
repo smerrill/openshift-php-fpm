@@ -5,6 +5,9 @@ case "$1" in
     version="$2"
 esac
 
+# Set the version if it is unset.
+[ -z "$version" ] && version=5.4.16
+
 # Copy the version specific files up to php directory
 shopt -s dotglob
 
