@@ -15,12 +15,11 @@ function apache() {
 }
 
 function fpm() {
-    client_message "$2 PHP-FPM"
-
   case "$1" in
     start)
+      client_message "Starting PHP-FPM"
       if [ -f "$FPM_PID_FILE" ]; then
-        echo "PHP-FPM is already running."
+        client_message "PHP-FPM is already running."
         return 0
       fi
       LD_LIBRARY_PATH=$OPENSHIFT_HOMEDIR/usr/php/5.4.16-1/usr/lib64 \
@@ -32,7 +31,7 @@ function fpm() {
       return $?
       ;;
     stop)
-      client_message "PHP-FPM"
+      client_message "Stopping PHP-FPM"
       if [ -f "$FPM_PID_FILE" ]; then
         fpm_pid=`cat "$FPM_PID_FILE" 2> /dev/null`
         kill $fpm_pid
@@ -47,7 +46,7 @@ function fpm() {
 }
 
 function stop() {
-    client_message "Apache server"
+    client_message "Stopping Apache server"
     if [ -f "$HTTPD_PID_FILE" ]; then
         httpd_pid=`cat "$HTTPD_PID_FILE" 2> /dev/null`
     fi
@@ -121,9 +120,9 @@ function build() {
 }
 
 case "$1" in
-  start)           apache start && fpm start "Starting" ;;
+  start)           apache start && fpm start ;;
   stop)            stop ;;
-  restart)         apache restart && fpm restart "Restarting" ;;
+  restart)         apache restart && fpm restart ;;
   reload|graceful) apache graceful "Restarting gracefully" ;;
   status)          status ;;
   configtest)      configtest ;;
