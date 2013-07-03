@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -xe
 
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
 
@@ -85,6 +85,7 @@ function tidy() {
 }
 
 function build() {
+    export
     pear="$OPENSHIFT_HOMEDIR/usr/php/5.4.16-1/usr/bin/pear"
 
     if [ -f "${OPENSHIFT_REPO_DIR}/.openshift/markers/force_clean_build" ]
