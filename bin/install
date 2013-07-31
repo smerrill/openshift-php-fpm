@@ -8,13 +8,6 @@ esac
 # Set the version if it is unset.
 [ -z "$version" ] && version=5.4.16
 
-# Expand our stuff into ~/usr.
-mkdir -p $OPENSHIFT_HOMEDIR/usr
-cd $OPENSHIFT_HOMEDIR/usr
-
-tar xzf $OPENSHIFT_PHP_DIR/versions/php/php-5.4.16-1.tgz --strip-components=2
-tar xzf $OPENSHIFT_PHP_DIR/versions/mod_fastcgi/mod_fastcgi-2.4.6-2.tgz --strip-components=2
-
 echo "$version" > "$OPENSHIFT_PHP_DIR/env/OPENSHIFT_PHP_VERSION"
 
 ln -s /usr/lib64/httpd/modules $OPENSHIFT_PHP_DIR/modules
