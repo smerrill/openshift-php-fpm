@@ -1,0 +1,163 @@
+#!/bin/sh -e
+
+# to test POSIX-correctness, change hash-bang to /bin/bash and uncomment
+# the following line:
+
+# set -o posix
+
+# Very simple configuration script for t1lib.  Checks a couple of
+# directories that might contain fonts, and if they exist, adds
+# anything ending in .pfa or pfb to the font database.  A few things
+# borrowed from paperconfig, (C) 1996, Yves Arrouye
+# <arrouye@debian.org>
+
+# note that this creates the "minimal" font database accepted by t1lib,
+# and doesn't look in every possible place for fonts.  It is mostly
+# provided so that xglyph will work out of the box...
+
+# Written by David Huggins-Daines <dhd@debian.org>
+
+usage() {
+    if [ "$1" = -h ]
+    then
+	exec 1>&2
+	echo -n U
+    else
+	echo -n u
+    fi
+
+    echo "sage: `basename $0` [ -v, --version ] [ -h, --help ] [ --force ]"
+    echo "                   [ fontdirs... ]"
+
+    if [ "$1" = -h ]
+    then
+	cat <<EOF
+
+Options: -v, --verbose          print version information and exit
+         -h, --help             print this help and exit
+         --force                force configuration
+EOF
+	exit 0
+    else
+	exit 1
+    fi
+}
+
+version=0.2
+topfontdirs="/usr/share/fonts /usr/share/texmf/fonts /usr/share/fonts/X11"
+for dir in $topfontdirs; do
+   if [ -d $dir ]; then
+       subdirs=$(find $dir -type d -printf "%p ")
+       fontdirs="$subdirs $fontdirs"
+   fi
+done
+conffile=/usr/share/t1lib/t1lib.config
+confdir=/usr/share/t1lib/
+dbase=/usr/share/t1lib/FontDatabase
+temp=/usr/share/t1lib/FontDatabase.tmp
+
+force=0
+
+while [ $# -ne 0 ]
+do
+    case "$1" in
+	-v|--version)
+	    echo "`basename $0` version $version" \
+		"by David Huggins-Daines <dhd@debian.org>"
+	    exit 0
+	    ;;
+	-h|--help)
+	    usage -h
+	    ;;
+	--force)
+	    force=1
+	    ;;
+	*)
+	    # hairy way to remove a trailing backslash (should use perl)
+	    pat=`expr $1 : "\(.*\)\/\$" || echo $1`
+	    # hairier way to find a string anywhere in another string
+	    # should really use perl.
+	    if ! grep $pat <<EOF >/dev/null 2>&1
+$fontdirs
+EOF
+	    then
+		fontdirs="$fontdirs $1"
+	    fi
+	    ;;
+    esac
+    shift
+done
+
+# We presume that if the database exists, then so does the
+# configuration file.  Hopefully this won't break anything.
+
+if [ $force -eq 1 ] || [ ! -e $dbase ]; then
+    fontpath=""
+    afmpath=""
+
+    mkdir -p $confdir || true
+
+    echo -n "Searching for Type 1 fonts and AFM files..."
+
+    for i in $fontdirs
+    do
+	if [ -d $i ] && ls $i/*.pf[ab] > /dev/null 2>&1; then
+	    if [ -n "$fontpath" ]; then
+		fontpath="$fontpath:$i"
+	    else
+		fontpath="$i"
+	    fi
+	    
+	    if ls $i/*.afm > /dev/null 2>&1; then
+		if [ -n "$afmpath" ]; then
+		    afmpath="$afmpath:$i"
+		else
+		    afmpath="$i"
+		fi
+	    fi
+	    # get a listing of all the fonts in each dir
+	    find $i -maxdepth 1 -name *.pf[ab] -printf '%f\n' >> $temp
+	fi
+    done
+    if [ -z "$fontpath" ]; then
+	cat <<EOF
+
+No Type 1 fonts were found in the expected locations.
+If you want t1lib to be aware of your fonts, you should run
+/usr/sbin/t1libconfig with the names of your local font directories as
+arguments, or you should edit the /usr/share/t1lib/FontDatabase file manually.
+See the FontDatabase(5) manual page for more information.
+
+Press [return] to continue.
+EOF
+        read foo || true
+	rm -f $temp
+    else
+        echo "done."
+        echo -n "Building font database..."
+        fontcount=`wc -l $temp || true`
+        echo $fontcount > $dbase
+        cat $temp >> $dbase
+        rm -f $temp
+        echo "done."
+    fi
+
+    # now set the paths in the config file
+    cat <<EOF >$conffile
+t1lib.config - global configuration file for t1lib.
+It was created automatically on `date`
+by the t1libconfig script.
+
+Run /usr/sbin/t1libconfig --force to rebuild it.
+    
+ENCODING=.
+AFM=$afmpath
+TYPE1=$fontpath
+FONTDATABASE=$dbase
+EOF
+else
+    echo "Configuration and font database files already exist."
+    echo "Run /usr/sbin/t1libconfig --force to rebuild them."
+fi
+
+exit 0

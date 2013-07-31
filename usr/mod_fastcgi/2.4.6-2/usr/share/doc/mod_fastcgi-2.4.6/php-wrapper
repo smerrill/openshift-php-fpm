@@ -1,0 +1,7 @@
+#!/bin/sh
+
+PHPRC="/etc/php.ini"
+export PHPRC
+PHP_FCGI_CHILDREN=4
+export PHP_FCGI_CHILDREN
+exec /usr/bin/php-cgi
