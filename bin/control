@@ -1,7 +1,5 @@
 #!/bin/bash -e
 
-exit 0
-
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
 
 HTTPD_CFG_FILE=$OPENSHIFT_PHP_DIR/configuration/etc/conf/httpd_nolog.conf
@@ -24,10 +22,10 @@ function fpm() {
         client_message "PHP-FPM is already running."
         return 0
       fi
-      LD_LIBRARY_PATH=$OPENSHIFT_HOMEDIR/usr/php/5.4.16-1/usr/lib64 \
-      PHP_INI_SCAN_DIR=$OPENSHIFT_HOMEDIR/usr/php/5.4.16-1/etc/php.d \
+      LD_LIBRARY_PATH=$OPENSHIFT_PHP_DIR/usr/php/5.4.16-1/usr/lib64 \
+      PHP_INI_SCAN_DIR=$OPENSHIFT_PHP_DIR/usr/php/5.4.16-1/etc/php.d \
       PHPRC=$OPENSHIFT_PHP_DIR/configuration/etc/php.ini \
-      $OPENSHIFT_HOMEDIR/usr/php/5.4.16-1/usr/sbin/php-fpm \
+      $OPENSHIFT_PHP_DIR/usr/php/5.4.16-1/usr/sbin/php-fpm \
         --fpm-config $OPENSHIFT_PHP_DIR/configuration/etc/php-fpm.conf \
         --pid $FPM_PID_FILE
       return $?
@@ -96,8 +94,8 @@ function build() {
         pear -c "$OPENSHIFT_HOMEDIR"/.pearrc config-set php_ini "$OPENSHIFT_PHP_DIR"/configuration/etc/php.ini
         pear -c "$OPENSHIFT_HOMEDIR"/.pearrc config-set auto_discover 1
         # @TODO: Make the version a variable?
-        pear -c "$OPENSHIFT_HOMEDIR"/.pearrc config-set php_bin "$OPENSHIFT_HOMEDIR"/usr/php/5.4.16-1/usr/bin/php
-        pear -c "$OPENSHIFT_HOMEDIR"/.pearrc config-set bin_dir "$OPENSHIFT_HOMEDIR"/usr/php/5.4.16-1/usr/bin
+        pear -c "$OPENSHIFT_HOMEDIR"/.pearrc config-set php_bin "$OPENSHIFT_PHP_DIR"/usr/php/5.4.16-1/usr/bin/php
+        pear -c "$OPENSHIFT_HOMEDIR"/.pearrc config-set bin_dir "$OPENSHIFT_PHP_DIR"/usr/php/5.4.16-1/usr/bin
         pear -c "$OPENSHIFT_HOMEDIR"/.pearrc upgrade --force pear
     fi
 
