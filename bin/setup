@@ -11,6 +11,8 @@ esac
 # Copy the version specific files up to php directory
 shopt -s dotglob
 
+mkdir -p $OPENSHIFT_HOMEDIR/.drush
+
 mkdir -p $OPENSHIFT_PHP_DIR/configuration/etc/
 cp -Hr $OPENSHIFT_PHP_DIR/versions/shared/configuration/etc/* $OPENSHIFT_PHP_DIR/configuration/etc/
 
